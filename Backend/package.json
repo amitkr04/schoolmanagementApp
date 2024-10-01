@@ -1,13 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "school management system",
+  "description": "School Management System",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend"
+    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend",
+    "frontend": "npm run dev --prefix Frontend",
+    "backend": "nodemon index.js",
+    "dev:all": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "author": "Amit",
   "license": "ISC",
@@ -23,6 +26,7 @@
     "validator": "^13.12.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "concurrently": "^7.6.0"
   }
 }
