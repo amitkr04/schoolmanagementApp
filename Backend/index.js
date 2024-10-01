@@ -1,6 +1,6 @@
 import express from "express";
-// import { config } from "dotenv";
 import dotenv from "dotenv";
+import path from "path";
 import cors from "cors";
 import { dbConnection } from "./database/dbConnection.js";
 import studentRouter from "./router/studentRouter.js";
@@ -20,7 +20,6 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 const app = express();
 dotenv.config();
 app.use(cors());
-// config({ path: "./config/config.env" });
 
 // Middleware to handle CORS
 
@@ -55,6 +54,16 @@ app.use("/api/v1/register", adminRegisterRouter);
 
 // Connect to database
 dbConnection();
+
+//-------code for deployment--------
+
+if (process.env.NODE_ENV === "production") {
+  const dirPath = path.resolve();
+  app.use(express.static("./Frontend/dist"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(dirPath, "./Frontend/dist", "index.html"));
+  });
+}
 
 // Start the server
 const PORT = process.env.PORT || 4000;
